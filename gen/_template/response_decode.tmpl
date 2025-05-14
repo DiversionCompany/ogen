@@ -145,15 +145,16 @@ func decode{{ $op.Name }}Response(resp *http.Response) (res {{ $op.Responses.GoT
 			{{- else }}
 			reader := resp.Body
 			{{- end }}
+			var response {{ $type.Name }}
 			if resp.Header.Get("Content-Type") == "application/x-ndjson" {
-				response := {{ $type.Name }}{Data: reader}
+				response = {{ $type.Name }}{Data: reader}
 			} else {
 				b, err := io.ReadAll(reader)
 				if err != nil {
 				    return res, err
 				}
 
-				response := {{ $type.Name }}{Data: bytes.NewReader(b)}
+				response = {{ $type.Name }}{Data: bytes.NewReader(b)}
 			}
 		{{- else }}
 			{{- errorf "%q: %s decoder not implemented" $encoding $type }}
