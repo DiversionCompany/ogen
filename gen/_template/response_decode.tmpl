@@ -146,7 +146,12 @@ func decode{{ $op.Name }}Response(resp *http.Response) (res {{ $op.Responses.GoT
 			reader := resp.Body
 			{{- end }}
 
-			response := {{ $type.Name }}{Data: reader}
+            b, err := io.ReadAll(reader)
+            if err != nil {
+            return res, err
+            }
+
+            response := {{ $type.Name }}{Data: bytes.NewReader(b)}
 		{{- else }}
 			{{- errorf "%q: %s decoder not implemented" $encoding $type }}
 		{{- end }}

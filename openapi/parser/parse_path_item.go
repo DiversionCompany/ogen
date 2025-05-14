@@ -164,13 +164,6 @@ func (p *parser) parseOp(
 		return nil, err
 	}
 
-	const extensionName = "x-ogen-streaming"
-	var b bool
-	if ex, ok := spec.Common.Extensions[extensionName]; ok {
-		if err := ex.Decode(&b); err == nil && b {
-			op.Streaming = true
-		}
-	}
 	return op, nil
 }
 
