@@ -305,7 +305,7 @@ func (c *{{ if $op.WebhookInfo }}Webhook{{ end }}Client) send{{ $op.Name }}(ctx 
 	if err != nil {
 		return res, errors.Wrap(err, "do request")
 	}
-    {{- if not $op.Streaming }}
+    {{- if not $op.Spec.Streaming }}
     defer resp.Body.Close()
     {{- else }}
     // Streaming response: caller must close resp.Body when done.
