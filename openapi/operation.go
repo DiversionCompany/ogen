@@ -14,6 +14,7 @@ type Operation struct {
 	Summary     string // optional
 	Description string // optional
 	Deprecated  bool   // optional
+	Streaming   bool   // optional
 
 	HTTPMethod  string
 	Path        Path
