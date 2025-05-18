@@ -29,6 +29,12 @@ type Client struct {
 
 var _ Operations = &Client{}
 
+const ndjsonContentType = "application/x-ndjson"
+
+func shouldCloseResponseBody(resp *http.Response) bool {
+	return resp.Header.Get("Content-Type") != ndjsonContentType
+}
+
 {{- if $.PathsServerEnabled }}
 {{- if $.Error }}
 type errorHandler interface {
@@ -305,7 +311,7 @@ func (c *{{ if $op.WebhookInfo }}Webhook{{ end }}Client) send{{ $op.Name }}(ctx 
 	if err != nil {
 		return res, errors.Wrap(err, "do request")
 	}
-	if resp.Header.Get("Content-Type") != "application/x-ndjson" {
+	if shouldCloseResponseBody(resp) {
 		defer resp.Body.Close()
 	}
 
