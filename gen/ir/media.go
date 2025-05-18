@@ -23,6 +23,8 @@ const (
 	EncodingOctetStream Encoding = "application/octet-stream"
 	// EncodingTextPlain is Encoding for text.
 	EncodingTextPlain Encoding = "text/plain"
+	// EncodingNDJSON is Encoding for newline-delimited JSON.
+	EncodingNDJSON Encoding = "application/x-ndjson"
 )
 
 func (t Encoding) String() string { return string(t) }
@@ -36,6 +38,8 @@ func (t Encoding) MultipartForm() bool { return t == EncodingMultipart }
 func (t Encoding) OctetStream() bool { return t == EncodingOctetStream }
 
 func (t Encoding) TextPlain() bool { return t == EncodingTextPlain }
+
+func (t Encoding) NDJSON() bool { return t == EncodingNDJSON }
 
 type Media struct {
 	// Encoding is the parsed content type used for encoding, but not for header value.
