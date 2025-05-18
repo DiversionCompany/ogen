@@ -145,7 +145,7 @@ func decode{{ $op.Name }}Response(resp *http.Response) (res {{ $op.Responses.GoT
 			{{- else }}
 			reader := resp.Body
 			{{- end }}
-			{{- if eq $contentType "application/x-ndjson" }}
+			{{- if $contentType.NDJSON }}
 			response := {{ $type.Name }}{Data: reader}
 			{{- else }}
 			b, err := io.ReadAll(reader)

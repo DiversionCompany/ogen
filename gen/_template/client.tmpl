@@ -32,6 +32,7 @@ var _ Operations = &Client{}
 const ndjsonContentType = "application/x-ndjson"
 
 func shouldCloseResponseBody(resp *http.Response) bool {
+	// caller is responsible for closing response body in case of ndjson
 	return resp.Header.Get("Content-Type") != ndjsonContentType
 }
 
